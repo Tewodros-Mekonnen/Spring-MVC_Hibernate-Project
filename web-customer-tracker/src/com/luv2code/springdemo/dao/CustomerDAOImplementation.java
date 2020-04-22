@@ -20,7 +20,10 @@ public class CustomerDAOImplementation implements CustomerDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	@Transactional // this annotation will take care of starting and committing session automagically!!
+	/* @Transactional */// this annotation will take care of starting and committing session automagically!! but here we will
+					// remove it because we will let the service layer handle this functionality. see CustomerServiceImpl.java
+					// we are commenting it because, since i created CustomerServiceImpl.java, this functionality will be 
+					// performed in there. see the architecture flow (controller <--> customerService <--> dao <-->db)
 	public List<Customer> getCustomers() {
 
 		// get the current hibernate session
