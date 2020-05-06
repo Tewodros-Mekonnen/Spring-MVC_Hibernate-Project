@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import com.luv2code.springdemo.entity.Customer;
 
 @Repository
@@ -20,10 +19,6 @@ public class CustomerDAOImplementation implements CustomerDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	/* @Transactional */// this annotation will take care of starting and committing session automagically!! but here we will
-					// remove it because we will let the service layer handle this functionality. see CustomerServiceImpl.java
-					// we are commenting it because, since i created CustomerServiceImpl.java, this functionality will be 
-					// performed in there. see the architecture flow (controller <--> customerService <--> dao <-->db)
 	public List<Customer> getCustomers() {
 
 		// get the current hibernate session
@@ -37,6 +32,17 @@ public class CustomerDAOImplementation implements CustomerDAO {
 
 		// return the result
 		return customers;
+
+	}
+
+	@Override
+	public void saveCustomer(Customer theCustomer) {
+
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// save the customer
+		currentSession.save(theCustomer);
 
 	}
 

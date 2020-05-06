@@ -11,18 +11,25 @@ import com.luv2code.springdemo.entity.Customer;
 
 @Service
 public class CustomerServiceImplementation implements CustomerService {
-	
+
 	@Autowired
 	private CustomerDAO customerDAO;
-	
-	
 
 	@Override
-	@Transactional // we are implementing this functionality in here, rather than in CustomerDAOImpl.java class
-					// this annotation will take care of starting and committing session automagically!!
+	@Transactional // we are implementing this functionality in here, rather than in
+					// CustomerDAOImpl.java class
+					// this annotation will take care of starting and committing session
+					// automagically!!
 	public List<Customer> getCustomers() {
-		
+
 		return customerDAO.getCustomers();
+	}
+
+	@Override
+	@Transactional
+	public void saveCustomer(Customer theCustomer) {
+		
+		customerDAO.saveCustomer(theCustomer);
 	}
 
 }

@@ -40,4 +40,10 @@ tr {
 	border-style:none;
 	text-align:left;	
 }
+
+#back-button,a{
+	text-decoration: none;
+	font-weight:600;
+	color: red;
+}
 	
