@@ -42,6 +42,17 @@ tr {
 }
 
 #back-button,a{
+	/* border: 1px solid #666;  */
+	border-radius: 5px; 
+	
+	font-size: 12px;
+	font-weight: bold;
+	width: 115px; 
+	padding: 5px 10px; 
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background: #cccccc;
+	
 	text-decoration: none;
 	font-weight:600;
 	color: red;

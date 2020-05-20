@@ -12,6 +12,8 @@ import com.luv2code.springdemo.entity.Customer;
 @Service
 public class CustomerServiceImplementation implements CustomerService {
 
+	// simply this CustomerService is delegated to a call CustomerDAO
+
 	@Autowired
 	private CustomerDAO customerDAO;
 
@@ -28,8 +30,31 @@ public class CustomerServiceImplementation implements CustomerService {
 	@Override
 	@Transactional
 	public void saveCustomer(Customer theCustomer) {
-		
+
 		customerDAO.saveCustomer(theCustomer);
 	}
+
+	@Override
+	@Transactional
+	public Customer getCustomer(int theId) {
+
+		return customerDAO.getCustomer(theId);
+	}
+
+	@Override
+	@Transactional
+	public void deleteCustomer(int theId) {
+
+		customerDAO.deleteCustomer(theId);
+	}
+
+	@Override
+	@Transactional
+	public List<Customer> searchCustomers(String theSearchName) {
+		
+		return customerDAO.searchCustomers(theSearchName);
+	}
+	
+	
 
 }

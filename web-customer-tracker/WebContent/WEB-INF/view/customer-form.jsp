@@ -23,8 +23,13 @@
 	<div id="container">
 		<h2>Save Customer</h2>
 
+	<!-- inside the form, when we click save button, the method inside CustomerController with 'saveCustomer' mapping will run -->
 		<form:form action="saveCustomer" modelAttribute="customer"
 			method="post">
+
+			<!-- need to associate this data with customer id, if we don't add this code, when we 
+			update data, it will just make it a new entry instead of update -->
+			<form:hidden path="id" />
 
 			<table>
 				<tbody>
@@ -56,8 +61,8 @@
 
 		<p id="back-button">
 			<a href="${pageContext.request.contextPath}/myCustomers/list">
-			Back To List</a>
-				
+				Back To List</a>
+
 		</p>
 
 	</div>

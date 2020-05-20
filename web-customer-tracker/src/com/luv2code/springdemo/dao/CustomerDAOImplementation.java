@@ -25,7 +25,7 @@ public class CustomerDAOImplementation implements CustomerDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// create a query
-		Query<Customer> theQuery = currentSession.createQuery("from Customer", Customer.class);
+		Query<Customer> theQuery = currentSession.createQuery("from Customer order by lastName", Customer.class);
 
 		// execute query and get result list
 		List<Customer> customers = theQuery.getResultList();
@@ -42,8 +42,69 @@ public class CustomerDAOImplementation implements CustomerDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// save the customer
-		currentSession.save(theCustomer);
+		currentSession.saveOrUpdate(theCustomer);
 
+	}
+
+	@Override
+	public Customer getCustomer(int theId) {
+
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// retrieve the customer from the database using the primary key
+		Customer theCustomer = currentSession.get(Customer.class, theId);
+
+		return theCustomer;
+	}
+
+	@Override
+	public void deleteCustomer(int theId) {
+
+		// get the current session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// retrieve the customer
+		Customer theCustomer = currentSession.get(Customer.class, theId);
+
+		// delete the customer
+		currentSession.delete(theCustomer);
+
+		/*
+		 * //deleting using Query
+		 * 
+		 * Query theQuery =
+		 * currentSession.createQuery("delete from Customer where id=:customerId");
+		 * theQuery.setParameter("customerId", theId); theQuery.executeUpdate();
+		 */
+	}
+
+	@Override
+	public List<Customer> searchCustomers(String theSearchName) {
+
+		// get the current session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		Query<Customer> theQuery = null;
+
+		// we perform the search by name, only if theSearchName is not empty
+		if (theSearchName != null && theSearchName.trim().length() > 0) {
+
+			// search for firstName or lastName, case insensitive
+			theQuery = currentSession.createQuery(
+					"from Customer where lower(firstName) like :theName or lower(lastName) like :theName",
+					Customer.class);
+
+			theQuery.setParameter("theName", "%" + theSearchName.toLowerCase() + "%");
+		} else {
+			// if theSearchName is empty, then just return all customer list
+			theQuery = currentSession.createQuery("from Customer", Customer.class);
+		}
+
+		// now execute the query and get result
+		List<Customer> customers = theQuery.getResultList();
+
+		return customers;
 	}
 
 }
